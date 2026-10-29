@@ -315,7 +315,7 @@ export const VehiclesPage: React.FC = () => {
         /* Card Grid View */
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {vehicles.map((v) => {
-            const imgInfo = getVehicleImage(v.vehicle_category, v.photo_url, { preferCutout: true });
+            const imgInfo = getVehicleImage(v.vehicle_category, { preferCutout: true });
             return (
             <div
               key={v.id}

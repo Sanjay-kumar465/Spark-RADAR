@@ -283,7 +283,7 @@ export const VehicleDetailPage: React.FC = () => {
     { id: 'operations', label: 'FASTag & Maintenance', icon: Wrench },
   ];
 
-  const vehicleImg = getVehicleImage(vehicle.vehicle_category, vehicle.photo_url, { preferCutout: true });
+  const vehicleImg = getVehicleImage(vehicle.vehicle_category, { preferCutout: true });
 
   return (
     <div className="space-y-6 max-w-7xl mx-auto">

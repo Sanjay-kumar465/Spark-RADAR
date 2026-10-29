@@ -59,14 +59,26 @@ export const VEHICLE_IMAGE_CATALOG = {
  * Resolves the appropriate vehicle photograph or category representative image.
  *
  * @param category Raw vehicle category string from backend or specs
- * @param userPhotoUrl Optional custom photo URL uploaded by fleet operator
- * @param options Configuration options (e.g. preferCutout)
+ * @param userPhotoUrlOrOptions Optional custom photo URL or configuration options
+ * @param options Optional configuration options when userPhotoUrl is provided
  */
 export function getVehicleImage(
   category?: string | null,
-  userPhotoUrl?: string | null,
-  options: VehicleImageOptions = { preferCutout: true }
+  userPhotoUrlOrOptions?: string | null | VehicleImageOptions,
+  options?: VehicleImageOptions
 ): VehicleImageResult {
+  let userPhotoUrl: string | null | undefined;
+  let opts: VehicleImageOptions = { preferCutout: true };
+
+  if (typeof userPhotoUrlOrOptions === 'object' && userPhotoUrlOrOptions !== null) {
+    opts = { ...opts, ...userPhotoUrlOrOptions };
+  } else {
+    userPhotoUrl = userPhotoUrlOrOptions;
+    if (options) {
+      opts = { ...opts, ...options };
+    }
+  }
+
   // 1. If operator has uploaded a custom photograph, prioritize it
   if (userPhotoUrl && userPhotoUrl.trim() !== '') {
     return {
@@ -78,7 +90,7 @@ export function getVehicleImage(
   }
 
   const cat = (category || '').toLowerCase().trim();
-  const useCutout = options.preferCutout !== false;
+  const useCutout = opts.preferCutout !== false;
 
   // 2. Intercity Bus / Coach
   if (

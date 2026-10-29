@@ -4,11 +4,6 @@ import {
   ExternalLink,
   Info,
   Truck,
-  RotateCcw,
-  CheckCircle2,
-  AlertTriangle,
-  FileX2,
-  FileWarning,
 } from 'lucide-react';
 import { useGSAP, gsap, isReducedMotion } from '../../animations/gsap';
 import type { Vehicle } from '../../types';
@@ -163,9 +158,7 @@ export const ComplianceRadar: React.FC<ComplianceRadarProps> = ({ vehicles }) =>
 
   const activeVehicleImage = activeInspection
     ? getVehicleImage(
-        activeInspection.vehicle.vehicle_category,
-        activeInspection.vehicle.photo_url,
-        { preferCutout: true }
+        activeInspection.vehicle.vehicle_category, { preferCutout: true }
       )
     : null;
 
