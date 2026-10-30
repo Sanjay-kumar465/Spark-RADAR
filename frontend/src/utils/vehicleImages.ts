@@ -19,32 +19,32 @@ export interface VehicleImageOptions {
 export const VEHICLE_IMAGE_CATALOG = {
   // Heavy Commercial Vehicles (Goods Lorry / Truck / Tipper / Tanker)
   heavyGoods: {
-    photo: '/images/hero-lorry.webp',
-    cutout: '/images/hero-lorry-cutout.webp',
+    photo: '/images/hero-lorry-cutout.png',
+    cutout: '/images/hero-lorry-cutout.png',
     alt: 'Commercial Heavy Goods Carrier Lorry',
   },
   // Passenger Bus & Coach
   coachBus: {
-    photo: '/images/Intercity-Coach.webp',
-    cutout: '/images/Intercity-Coach-cutout.webp',
+    photo: '/images/Intercity-Coach-cutout.png',
+    cutout: '/images/Intercity-Coach-cutout.png',
     alt: 'Commercial Luxury Intercity Passenger Coach Bus',
   },
   // Force Tempo Traveller / Maxi Cab / Van
   tempoTraveller: {
-    photo: '/images/tempo-traveller.webp',
-    cutout: '/images/tempo-traveller-cutout.webp',
+    photo: '/images/tempo-traveller-cutout.png',
+    cutout: '/images/tempo-traveller-cutout.png',
     alt: 'Force Motors Commercial Tempo Traveller Maxi Cab',
   },
   // Commercial Tourist Taxi / Sedan / Innova Cab
   commercialTaxi: {
-    photo: '/images/taxi-cab.webp',
-    cutout: '/images/taxi-cab-cutout.webp',
+    photo: '/images/taxi-cab.png',
+    cutout: '/images/taxi-cab.png',
     alt: 'Commercial Tourist Taxi Sedan Cab',
   },
   // Commercial Auto-Rickshaw / Three-Wheeler
   autoRickshaw: {
-    photo: '/images/auto-rickshaw.webp',
-    cutout: '/images/auto-rickshaw-cutout.webp',
+    photo: '/images/auto-rickshaw-cutout.png',
+    cutout: '/images/auto-rickshaw-cutout.png',
     alt: 'Commercial Bajaj Auto-Rickshaw Three-Wheeler',
   },
   // Highway / Fleet Background Scene

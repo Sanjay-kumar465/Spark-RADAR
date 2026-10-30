@@ -710,7 +710,7 @@ export const LandingPage: React.FC = () => {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
             
             {/* Left Column: Typography & CTAs (Layer 2 - Content z-20) */}
-            <div className="lg:col-span-7 text-left space-y-6 relative z-20">
+            <div className="lg:col-span-7 xl:col-span-6 text-left space-y-6 relative z-20">
               {/* Market Badge */}
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-graphite border border-golden/30 text-golden text-xs font-semibold tracking-wide uppercase shadow-subtle">
                 <ShieldCheck className="w-4 h-4 text-golden" />
@@ -781,33 +781,33 @@ export const LandingPage: React.FC = () => {
             {/* Right Column: Hero Real Photograph Depth Reveal (Layer 3 - Cutout Lorry with Parallax Depth) */}
             <div
               ref={heroVehicleRef}
-              className="lg:col-span-5 flex items-center justify-center relative z-10 select-none pointer-events-none mt-4 lg:mt-0"
+              className="lg:col-span-5 xl:col-span-6 flex items-center justify-center relative z-10 select-none pointer-events-none mt-6 lg:mt-0 xl:-mr-12"
             >
-              <div className="relative w-full max-w-md lg:max-w-xl flex flex-col items-center">
+              <div className="relative w-full max-w-lg sm:max-w-xl lg:max-w-2xl xl:max-w-3xl flex flex-col items-center">
                 {/* Subtle warm golden ambient ground glow */}
                 <div
-                  className="absolute -inset-4 rounded-full opacity-30 blur-2xl pointer-events-none"
+                  className="absolute -inset-8 sm:-inset-14 rounded-full opacity-45 blur-3xl pointer-events-none"
                   style={{
-                    background: 'radial-gradient(circle, rgba(230, 178, 60, 0.28) 0%, transparent 70%)',
+                    background: 'radial-gradient(ellipse at center, rgba(230, 178, 60, 0.35) 0%, rgba(230, 178, 60, 0.08) 55%, transparent 75%)',
                   }}
                 />
 
-                {/* Real Commercial Lorry Cutout (Transparent background, No white box) */}
+                {/* Real Commercial Lorry Cutout (High-resolution Transparent RGBA Cutout, Zero White Box) */}
                 <img
-                  src="/images/hero-lorry.webp"
+                  src="/images/hero-lorry-cutout.png"
                   alt="Real Commercial Lorry Ashok Leyland 1215 HCV"
-                  className="relative z-10 w-full h-auto object-contain drop-shadow-[0_20px_35px_rgba(0,0,0,0.9)] max-h-[380px] sm:max-h-[440px]"
-                  width="640"
-                  height="480"
+                  className="relative z-10 w-full h-auto object-contain filter drop-shadow-[0_25px_45px_rgba(0,0,0,0.95)] max-h-[460px] sm:max-h-[540px] lg:max-h-[620px] xl:max-h-[680px] scale-105 sm:scale-110 lg:scale-120 transform-gpu transition-transform duration-700"
+                  width="1536"
+                  height="1024"
                 />
 
                 {/* Floating Plate Pill Overlay (Layer 4) */}
-                <div className="relative z-20 -mt-6 bg-black/90 backdrop-blur-md border border-golden/40 px-4 py-2 rounded-xl flex items-center justify-between gap-4 shadow-dropdown w-5/6">
+                <div className="relative z-20 -mt-6 sm:-mt-8 lg:-mt-10 bg-black/95 backdrop-blur-md border border-golden/50 px-5 py-2.5 rounded-2xl flex items-center justify-between gap-4 shadow-elevated w-4/5 max-w-sm sm:max-w-md">
                   <div>
-                    <span className="font-mono text-golden font-bold block text-sm">TN 01 EX 9988</span>
-                    <span className="text-sand text-[11px]">Ashok Leyland 1215 • Goods HCV</span>
+                    <span className="font-mono text-golden font-bold block text-sm sm:text-base tracking-wider">TN 01 EX 9988</span>
+                    <span className="text-sand text-[11px] sm:text-xs">Ashok Leyland 1215 • Goods HCV</span>
                   </div>
-                  <span className="px-2 py-0.5 rounded bg-golden text-black font-mono font-bold text-[10px]">
+                  <span className="px-2.5 py-1 rounded bg-golden text-black font-mono font-bold text-[10px] sm:text-xs tracking-wide">
                     ACTIVE
                   </span>
                 </div>
@@ -973,11 +973,11 @@ export const LandingPage: React.FC = () => {
                 <div className="p-6 rounded-2xl bg-graphite/40 border border-graphite flex flex-col items-center justify-center relative overflow-hidden">
                   {/* Real Cutout Image */}
                   <img
-                    src="/images/hero-lorry.webp"
-                    alt="Ashok Leyland 1215 HCV Real Lorry"
-                    className="journey-lorry-img w-full h-auto max-h-64 object-contain drop-shadow-[0_15px_25px_rgba(0,0,0,0.8)]"
-                    width="600"
-                    height="400"
+                    src="/images/hero-lorry-cutout.png"
+                    alt="Ashok Leyland 1215 HCV Real Lorry Cutout"
+                    className="journey-lorry-img w-full h-auto max-h-72 sm:max-h-84 object-contain filter drop-shadow-[0_20px_35px_rgba(0,0,0,0.9)] scale-105"
+                    width="1536"
+                    height="1024"
                   />
                   
                   {/* Vehicle Identity Badge */}
