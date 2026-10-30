@@ -18,6 +18,7 @@ export const GoogleSignInButton: React.FC<GoogleSignInButtonProps> = ({
   const [loading, setLoading] = useState(false);
   const [googleConfigured, setGoogleConfigured] = useState(false);
   const [scriptLoaded, setScriptLoaded] = useState(false);
+  const [gsiButtonMounted, setGsiButtonMounted] = useState(false);
   const googleButtonContainerRef = useRef<HTMLDivElement>(null);
 
   const clientId = (import.meta.env.VITE_GOOGLE_CLIENT_ID || '').trim();
@@ -78,6 +79,16 @@ export const GoogleSignInButton: React.FC<GoogleSignInButtonProps> = ({
           logo_alignment: 'left',
           width: buttonWidth,
         });
+
+        // Verify if Google successfully rendered an iframe into container
+        const checkMounted = () => {
+          if (googleButtonContainerRef.current && googleButtonContainerRef.current.children.length > 0) {
+            setGsiButtonMounted(true);
+          }
+        };
+        setTimeout(checkMounted, 100);
+        setTimeout(checkMounted, 400);
+        setTimeout(checkMounted, 1000);
       }
     } catch (err) {
       console.warn('[Spark Radar] Google GSI initialization notice:', err);
@@ -110,13 +121,22 @@ export const GoogleSignInButton: React.FC<GoogleSignInButtonProps> = ({
       return;
     }
 
-    if ((window as any).google?.accounts?.id) {
-      (window as any).google.accounts.id.prompt((notification: any) => {
+    if (!scriptLoaded || !(window as any).google?.accounts?.id) {
+      onError?.('Google authentication services are still loading. Please try again in a moment.');
+      return;
+    }
+
+    (window as any).google.accounts.id.prompt((notification: any) => {
         if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
-          console.info('[Spark Radar] Google One-Tap prompt bypassed or dismissed.');
+          const reason = typeof notification.getNotDisplayedReason === 'function' ? notification.getNotDisplayedReason() : 'origin_or_cookie_policy';
+          console.warn('[Spark Radar] Google One-Tap prompt bypassed or dismissed:', reason);
+          if (reason === 'opt_out_or_no_session' || reason === 'suppressed_by_user') {
+            onError?.('Google prompt was dismissed. Please click again or ensure you are signed in to Google.');
+          } else {
+            onError?.('Google Sign-In blocked. Ensure https://spark-radar-saas.vercel.app is added under "Authorized JavaScript origins" in Google Cloud Console.');
+          }
         }
       });
-    }
   };
 
   const buttonLabel =
@@ -128,13 +148,14 @@ export const GoogleSignInButton: React.FC<GoogleSignInButtonProps> = ({
 
   return (
     <div className="w-full flex flex-col items-center">
-      {/* Official GSI rendered button target */}
-      {googleConfigured && scriptLoaded && (
-        <div ref={googleButtonContainerRef} className="w-full flex justify-center min-h-[44px]" />
-      )}
+      {/* Official GSI rendered button target: only displayed when Google has successfully mounted */}
+      <div 
+        ref={googleButtonContainerRef} 
+        className={`w-full flex justify-center ${gsiButtonMounted ? 'min-h-[44px]' : 'hidden'}`} 
+      />
 
-      {/* Styled accessible fallback button: shown when loading, unconfigured, or before GSI loads */}
-      {(!googleConfigured || !scriptLoaded) && (
+      {/* Styled accessible fallback button: shown whenever Google GSI hasn't mounted an iframe */}
+      {!gsiButtonMounted && (
         <button
           type="button"
           onClick={handleClickFallback}
