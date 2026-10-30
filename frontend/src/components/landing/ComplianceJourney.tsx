@@ -78,9 +78,9 @@ const MILESTONES: MilestoneItem[] = [
     number: '01',
     label: 'ONBOARD',
     badge: 'Stage 01 • Fleet Onboarding & Identity',
-    heading: 'Every Vehicle Starts Its Journey Here.',
+    heading: 'Strict plate normalization eliminates duplicate confusion.',
     description:
-      'Register your fleet, organize vehicle identities, and bring essential compliance documents into one structured workspace.',
+      'Fleet managers type registration numbers in varied formats. Spark Radar normalizes casing and whitespace automatically before writing to PostgreSQL, preventing accidental duplicate vehicle profiles across transport yards.',
     supportingDetails: [
       {
         icon: Truck,
@@ -109,9 +109,9 @@ const MILESTONES: MilestoneItem[] = [
       model: 'Ashok Leyland 1215 HCV',
       plate: 'TN 01 EX 9988',
       classification: 'Commercial Goods Carrier (HCV)',
-      status: 'REGISTERED',
+      status: '01 ONBOARDED',
       specLine1: 'GVW Rating: 11,990 kg',
-      specLine2: 'Permit: National Goods Carrier',
+      specLine2: 'Permit: National Goods Permit',
       width: 1536,
       height: 1024,
     },
@@ -136,9 +136,9 @@ const MILESTONES: MilestoneItem[] = [
     number: '02',
     label: 'VERIFY',
     badge: 'Stage 02 • Document Verification & Validation',
-    heading: "Know What's Valid. Know What's Missing.",
+    heading: 'Magic-byte inspection validates binary authenticity.',
     description:
-      'Organize and verify vehicle documentation while identifying missing, expired, or incomplete compliance records.',
+      'Upload registration certificates, insurance binders, and Fitness Form 38. Magic-byte verification checks binary authenticity before file storage, identifying missing, expired, or incomplete compliance records.',
     supportingDetails: [
       {
         icon: ShieldCheck,
@@ -162,16 +162,16 @@ const MILESTONES: MilestoneItem[] = [
       },
     ],
     vehicle: {
-      src: '/images/tempo-traveller-cutout.png',
-      alt: 'Force Traveller Commercial Passenger Van Cutout',
-      model: 'Force Traveller T2 4020',
-      plate: 'DL 01 VA 4421',
-      classification: 'Commercial Passenger Transport (17+D)',
-      status: '4/4 ATTACHED',
-      specLine1: 'Seating: 17 + Driver Luxury',
-      specLine2: 'Permit: Interstate Commercial Tourist',
-      width: 1536,
-      height: 1024,
+      src: '/images/Intercity-Coach-cutout.png',
+      alt: 'BharatBenz Intercity Luxury Coach Commercial Passenger Bus Cutout',
+      model: 'BharatBenz Intercity Luxury Coach',
+      plate: 'TN 07 BS 2024',
+      classification: 'Commercial Passenger Coach (45-Seater)',
+      status: '02 VERIFIED',
+      specLine1: 'Seating: 45-Seater Air Suspended',
+      specLine2: 'Permit: All-India Tourist Permit',
+      width: 1774,
+      height: 887,
     },
     metaWidget: {
       type: 'verification',
@@ -194,9 +194,9 @@ const MILESTONES: MilestoneItem[] = [
     number: '03',
     label: 'MONITOR',
     badge: 'Stage 03 • Expiry Radar & Alerts',
-    heading: 'Stay Ahead of Every Expiry.',
+    heading: 'Deterministic countdown calculations. Zero false validity.',
     description:
-      'Monitor upcoming renewals, track deadlines, and prioritize overdue obligations before they disrupt fleet operations.',
+      'Continuous multi-tier calculation engine triggers countdown alerts at 30, 15, 7, and 1-day boundaries. Missing expiry dates are never assumed valid, preventing impoundment and penalty fees.',
     supportingDetails: [
       {
         icon: Clock,
@@ -220,17 +220,17 @@ const MILESTONES: MilestoneItem[] = [
       },
     ],
     vehicle: {
-      src: '/images/taxi-cab-cutout.png',
-      alt: 'Toyota Sedan Commercial Fleet Taxi Cutout',
-      model: 'Toyota Commercial Fleet Taxi',
-      plate: 'MH 02 BZ 1090',
-      classification: 'Commercial Passenger Fleet Taxi',
-      status: 'URGENT RADAR',
+      src: '/images/tempo-traveller-cutout.png',
+      alt: 'Force Traveller Commercial Passenger Van Cutout',
+      model: 'Force Traveller T2 4020',
+      plate: 'TN 09 TT 4422',
+      classification: 'Commercial Passenger Transport (17+D)',
+      status: '03 CRITICAL RADAR',
       statusUrgent: true,
-      specLine1: 'Fuel Class: Petrol / CNG Hybrid',
-      specLine2: 'Permit: City & Statewide Tourist Taxi',
-      width: 1555,
-      height: 1011,
+      specLine1: 'Seating: 17 + Driver Luxury Maxi Cab',
+      specLine2: 'Permit: Interstate Commercial Tourist',
+      width: 1536,
+      height: 1024,
     },
     metaWidget: {
       type: 'monitor',
@@ -240,7 +240,7 @@ const MILESTONES: MilestoneItem[] = [
       items: [
         {
           name: 'Commercial Insurance Policy',
-          sub: 'MH 02 BZ 1090 • Policy #88219',
+          sub: 'TN 09 TT 4422 • Policy #88219',
           urgency: 'Expires in 24 Hours',
           urgent: true,
         },
@@ -262,9 +262,9 @@ const MILESTONES: MilestoneItem[] = [
     number: '04',
     label: 'ARCHIVE',
     badge: 'Stage 04 • Immutable History & Audit Docket',
-    heading: 'Every Record. Preserved and Traceable.',
+    heading: 'Renewal completed. Antecedent certificates preserved.',
     description:
-      'Maintain historical vehicle documents, completed renewal activities, and an organized compliance audit trail.',
+      'Completing a renewal stamps actor identity and notes. Superseded certificates remain permanently searchable for transport tax, police, and insurance audits with cryptographic integrity.',
     supportingDetails: [
       {
         icon: FileText,
@@ -288,22 +288,22 @@ const MILESTONES: MilestoneItem[] = [
       },
     ],
     vehicle: {
-      src: '/images/Intercity-Coach-cutout.png',
-      alt: 'BharatBenz Intercity Luxury Coach Commercial Passenger Bus Cutout',
-      model: 'BharatBenz Intercity Luxury Coach',
-      plate: 'KA 05 MC 7780',
-      classification: 'Intercity Luxury Coach (45-Seater)',
-      status: 'AUDIT SEALED',
-      specLine1: 'Chassis: Multi-Axle Air Suspension',
-      specLine2: 'Permit: All-India Intercity Tourist Permit',
-      width: 1774,
-      height: 887,
+      src: '/images/taxi-cab.png',
+      alt: 'Toyota Sedan Commercial Fleet Taxi Cutout',
+      model: 'Toyota Commercial Fleet Taxi',
+      plate: 'TN 02 TX 8811',
+      classification: 'Commercial Passenger Fleet Taxi',
+      status: '04 AUDIT SEALED',
+      specLine1: 'Fuel Class: Petrol / CNG Hybrid',
+      specLine2: 'Permit: City & Statewide Tourist Taxi',
+      width: 1555,
+      height: 1011,
     },
     metaWidget: {
       type: 'archive',
       label: 'IMMUTABLE AUDIT DOCKET',
       tag: 'AUDIT VERIFIED',
-      hash: '#arc-2026-ka05-docket',
+      hash: '#arc-2026-tn02-docket',
       actor: 'Selvam M. (Fleet Operations Manager)',
       timestamp: '2026-10-30 14:30 IST',
       items: [
@@ -418,68 +418,49 @@ export const ComplianceJourney: React.FC = () => {
       }
 
       // ─────────────────────────────────────────────────────────────
-      // B. RESPONSIVE ANIMATIONS: DESKTOP PINNED vs MOBILE FLOW
+      // B. RESPONSIVE ANIMATIONS: PINNED STORYTELLING DECK (md+)
       // ─────────────────────────────────────────────────────────────
       const mm = gsap.matchMedia();
 
-      // 1. DESKTOP MODE (min-width: 1024px)
-      mm.add('(min-width: 1024px)', () => {
+      // 1. PINNED STORYTELLING MODE (min-width: 768px for all tablets, laptops & desktops)
+      mm.add('(min-width: 768px)', () => {
         if (reduced) {
           gsap.set('.desktop-milestone-card', { opacity: 1, y: 0, scale: 1 });
           return;
         }
 
-        // Set initial card visibility: Card 0 active, 1-3 hidden
-        gsap.set('.desktop-card-0', { opacity: 1, pointerEvents: 'auto' });
+        // Set initial card visibility: Card 0 active and visible, 1-3 hidden
+        gsap.set('.desktop-card-0', { opacity: 1, y: 0, pointerEvents: 'auto', zIndex: 10 });
         gsap.set(['.desktop-card-1', '.desktop-card-2', '.desktop-card-3'], {
           opacity: 0,
+          y: 30,
           pointerEvents: 'none',
+          zIndex: 1,
         });
 
-        // Initial entrance for Card 0
-        const card0Entrance = gsap.timeline({
-          scrollTrigger: {
-            trigger: containerRef.current,
-            start: 'top 75%',
-            toggleActions: 'play none none reverse',
-          },
-        });
-
-        card0Entrance
-          .fromTo(
-            '.desktop-vehicle-0',
-            { opacity: 0, y: 80, scale: 0.88 },
-            { opacity: 1, y: 0, scale: 1, duration: 1.15, ease: 'power3.out' }
-          )
-          .fromTo(
-            '.desktop-reveal-0',
-            { opacity: 0, y: 22 },
-            { opacity: 1, y: 0, stagger: 0.07, duration: 0.7, ease: 'power2.out' },
-            '-=0.85'
-          );
-
-        // Pinned Storytelling Master Scrub Timeline
+        // Pinned Storytelling Master Scrub Timeline: Locks container still in viewport
         const masterTimeline = gsap.timeline({
           scrollTrigger: {
             trigger: containerRef.current,
             pin: true,
+            pinSpacing: true,
             start: 'top top',
-            end: '+=2400',
-            scrub: 0.65,
+            end: '+=3200',
+            scrub: 0.8,
             anticipatePin: 1,
             onUpdate: (self) => {
               const p = self.progress;
               let currentStage = 0;
               if (p < 0.25) currentStage = 0;
-              else if (p < 0.55) currentStage = 1;
-              else if (p < 0.82) currentStage = 2;
+              else if (p < 0.50) currentStage = 1;
+              else if (p < 0.75) currentStage = 2;
               else currentStage = 3;
 
               updateActiveIndex(currentStage);
 
               // Update scrubbed progress bar
               if (progressBarFillRef.current) {
-                const fillPercent = Math.min(100, Math.max(4, p * 100));
+                const fillPercent = Math.min(100, Math.max(5, p * 100));
                 progressBarFillRef.current.style.width = `${fillPercent}%`;
               }
             },
@@ -488,127 +469,94 @@ export const ComplianceJourney: React.FC = () => {
 
         desktopScrollTriggerRef.current = masterTimeline.scrollTrigger ?? null;
 
-        // --- PHASE 0: HOLD CARD 0 (Subtle Vehicle Depth) ---
+        // --- STAGE 0: Hold Card 0 (Ashok Leyland Lorry Cutout) ---
         masterTimeline.to(
           '.desktop-vehicle-0',
-          { y: -16, scale: 1.03, duration: 1.5, ease: 'none' },
+          { y: -10, scale: 1.02, duration: 2, ease: 'none' },
           0
         );
 
-        // --- TRANSITION 0 -> 1 (Time 1.8 -> 3.2) ---
+        // --- TRANSITION 0 -> 1: Card 0 (Lorry) exits, Card 1 (Intercity Coach) enters ---
         masterTimeline
-          .addLabel('trans-0-1', 1.8)
-          // Card 0 Exits
-          .to(
-            '.desktop-text-0',
-            { opacity: 0, y: -30, duration: 0.9, ease: 'power2.in' },
-            'trans-0-1'
-          )
-          .to(
-            '.desktop-vehicle-0',
-            { opacity: 0, x: -60, scale: 0.92, duration: 0.95, ease: 'power2.in' },
-            'trans-0-1'
-          )
-          .set('.desktop-card-0', { pointerEvents: 'none' }, 'trans-0-1+=0.9')
-          // Card 1 Enters
-          .set('.desktop-card-1', { pointerEvents: 'auto', opacity: 1 }, 'trans-0-1+=0.5')
+          .addLabel('trans-0-1', 2.0)
+          .to('.desktop-card-0', { opacity: 0, y: -30, duration: 1.0, ease: 'power2.in' }, 'trans-0-1')
+          .set('.desktop-card-0', { pointerEvents: 'none', zIndex: 1 }, 'trans-0-1+=1.0')
+          .set('.desktop-card-1', { pointerEvents: 'auto', zIndex: 10 }, 'trans-0-1+=0.5')
           .fromTo(
-            '.desktop-vehicle-1',
-            { opacity: 0, y: 80, scale: 0.88, x: -40 },
-            { opacity: 1, y: 0, scale: 1, x: 0, duration: 1.15, ease: 'power3.out' },
+            '.desktop-card-1',
+            { opacity: 0, y: 30 },
+            { opacity: 1, y: 0, duration: 1.0, ease: 'power2.out' },
             'trans-0-1+=0.5'
           )
           .fromTo(
-            '.desktop-reveal-1',
-            { opacity: 0, y: 24 },
-            { opacity: 1, y: 0, stagger: 0.07, duration: 0.75, ease: 'power2.out' },
-            'trans-0-1+=0.65'
+            '.desktop-vehicle-1',
+            { opacity: 0, scale: 0.92, y: 40 },
+            { opacity: 1, scale: 1, y: 0, duration: 1.1, ease: 'power3.out' },
+            'trans-0-1+=0.6'
           );
 
-        // --- PHASE 1: HOLD CARD 1 (Time 3.2 -> 4.8) ---
+        // --- STAGE 1: Hold Card 1 (Intercity Coach Cutout) ---
         masterTimeline.to(
           '.desktop-vehicle-1',
-          { y: -14, scale: 1.03, duration: 1.5, ease: 'none' },
-          3.2
+          { y: -10, scale: 1.02, duration: 2, ease: 'none' },
+          3.5
         );
 
-        // --- TRANSITION 1 -> 2 (Time 4.8 -> 6.2) ---
+        // --- TRANSITION 1 -> 2: Card 1 (Coach) exits, Card 2 (Tempo Traveller) enters ---
         masterTimeline
-          .addLabel('trans-1-2', 4.8)
-          // Card 1 Exits
-          .to(
-            '.desktop-text-1',
-            { opacity: 0, y: -30, duration: 0.9, ease: 'power2.in' },
-            'trans-1-2'
-          )
-          .to(
-            '.desktop-vehicle-1',
-            { opacity: 0, x: -60, scale: 0.92, duration: 0.95, ease: 'power2.in' },
-            'trans-1-2'
-          )
-          .set('.desktop-card-1', { pointerEvents: 'none' }, 'trans-1-2+=0.9')
-          // Card 2 Enters
-          .set('.desktop-card-2', { pointerEvents: 'auto', opacity: 1 }, 'trans-1-2+=0.5')
+          .addLabel('trans-1-2', 5.5)
+          .to('.desktop-card-1', { opacity: 0, y: -30, duration: 1.0, ease: 'power2.in' }, 'trans-1-2')
+          .set('.desktop-card-1', { pointerEvents: 'none', zIndex: 1 }, 'trans-1-2+=1.0')
+          .set('.desktop-card-2', { pointerEvents: 'auto', zIndex: 10 }, 'trans-1-2+=0.5')
           .fromTo(
-            '.desktop-vehicle-2',
-            { opacity: 0, y: 80, scale: 0.88, x: 40 },
-            { opacity: 1, y: 0, scale: 1, x: 0, duration: 1.15, ease: 'power3.out' },
+            '.desktop-card-2',
+            { opacity: 0, y: 30 },
+            { opacity: 1, y: 0, duration: 1.0, ease: 'power2.out' },
             'trans-1-2+=0.5'
           )
           .fromTo(
-            '.desktop-reveal-2',
-            { opacity: 0, y: 24 },
-            { opacity: 1, y: 0, stagger: 0.07, duration: 0.75, ease: 'power2.out' },
-            'trans-1-2+=0.65'
+            '.desktop-vehicle-2',
+            { opacity: 0, scale: 0.92, y: 40 },
+            { opacity: 1, scale: 1, y: 0, duration: 1.1, ease: 'power3.out' },
+            'trans-1-2+=0.6'
           );
 
-        // --- PHASE 2: HOLD CARD 2 (Time 6.2 -> 7.8) ---
+        // --- STAGE 2: Hold Card 2 (Tempo Traveller Cutout) ---
         masterTimeline.to(
           '.desktop-vehicle-2',
-          { y: -14, scale: 1.03, duration: 1.5, ease: 'none' },
-          6.2
+          { y: -10, scale: 1.02, duration: 2, ease: 'none' },
+          7.0
         );
 
-        // --- TRANSITION 2 -> 3 (Time 7.8 -> 9.2) ---
+        // --- TRANSITION 2 -> 3: Card 2 (Tempo) exits, Card 3 (Sedan Taxi) enters ---
         masterTimeline
-          .addLabel('trans-2-3', 7.8)
-          // Card 2 Exits
-          .to(
-            '.desktop-text-2',
-            { opacity: 0, y: -30, duration: 0.9, ease: 'power2.in' },
-            'trans-2-3'
-          )
-          .to(
-            '.desktop-vehicle-2',
-            { opacity: 0, x: 60, scale: 0.92, duration: 0.95, ease: 'power2.in' },
-            'trans-2-3'
-          )
-          .set('.desktop-card-2', { pointerEvents: 'none' }, 'trans-2-3+=0.9')
-          // Card 3 Enters
-          .set('.desktop-card-3', { pointerEvents: 'auto', opacity: 1 }, 'trans-2-3+=0.5')
+          .addLabel('trans-2-3', 9.0)
+          .to('.desktop-card-2', { opacity: 0, y: -30, duration: 1.0, ease: 'power2.in' }, 'trans-2-3')
+          .set('.desktop-card-2', { pointerEvents: 'none', zIndex: 1 }, 'trans-2-3+=1.0')
+          .set('.desktop-card-3', { pointerEvents: 'auto', zIndex: 10 }, 'trans-2-3+=0.5')
           .fromTo(
-            '.desktop-vehicle-3',
-            { opacity: 0, y: 80, scale: 0.88, x: -40 },
-            { opacity: 1, y: 0, scale: 1, x: 0, duration: 1.15, ease: 'power3.out' },
+            '.desktop-card-3',
+            { opacity: 0, y: 30 },
+            { opacity: 1, y: 0, duration: 1.0, ease: 'power2.out' },
             'trans-2-3+=0.5'
           )
           .fromTo(
-            '.desktop-reveal-3',
-            { opacity: 0, y: 24 },
-            { opacity: 1, y: 0, stagger: 0.07, duration: 0.75, ease: 'power2.out' },
-            'trans-2-3+=0.65'
+            '.desktop-vehicle-3',
+            { opacity: 0, scale: 0.92, y: 40 },
+            { opacity: 1, scale: 1, y: 0, duration: 1.1, ease: 'power3.out' },
+            'trans-2-3+=0.6'
           );
 
-        // --- PHASE 3: HOLD CARD 3 (Time 9.2 -> 11.0) ---
+        // --- STAGE 3: Hold Card 3 (Sedan Taxi Cutout) ---
         masterTimeline.to(
           '.desktop-vehicle-3',
-          { y: -14, scale: 1.03, duration: 1.5, ease: 'none' },
-          9.2
+          { y: -10, scale: 1.02, duration: 2, ease: 'none' },
+          10.5
         );
       });
 
-      // 2. MOBILE / TABLET MODE (max-width: 1023px)
-      mm.add('(max-width: 1023px)', () => {
+      // 2. MOBILE STREAM MODE (max-width: 767px)
+      mm.add('(max-width: 767px)', () => {
         if (reduced) return;
 
         MILESTONES.forEach((_, idx) => {
@@ -659,7 +607,7 @@ export const ComplianceJourney: React.FC = () => {
     <section
       id="compliance-journey"
       ref={containerRef}
-      className="relative bg-black text-white py-20 lg:py-24 border-b border-graphite overflow-hidden selection:bg-golden selection:text-black"
+      className="relative bg-black text-white min-h-screen py-12 lg:py-16 flex flex-col justify-center border-b border-graphite overflow-hidden selection:bg-golden selection:text-black"
     >
       {/* Background Ambience: Subtle Radial Glows */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-[600px] pointer-events-none opacity-40 bg-[radial-gradient(ellipse_at_top,rgba(230,178,60,0.12),transparent_70%)]" />
@@ -732,9 +680,9 @@ export const ComplianceJourney: React.FC = () => {
         </div>
 
         {/* ─────────────────────────────────────────────────────────────
-            2. DESKTOP PINNED STORYTELLING DECK (lg:grid)
+            2. PINNED STORYTELLING DECK (md:grid)
         ───────────────────────────────────────────────────────────── */}
-        <div className="hidden lg:grid grid-cols-1 grid-rows-1 relative min-h-[640px] items-center">
+        <div className="hidden md:grid grid-cols-1 grid-rows-1 relative min-h-[580px] lg:min-h-[620px] items-center">
           {MILESTONES.map((m, idx) => {
             const isTextLeft = m.layout === 'text-left';
 
@@ -800,9 +748,9 @@ export const ComplianceJourney: React.FC = () => {
         </div>
 
         {/* ─────────────────────────────────────────────────────────────
-            3. MOBILE & TABLET EDITORIAL STREAM (lg:hidden)
+            3. MOBILE EDITORIAL STREAM (md:hidden)
         ───────────────────────────────────────────────────────────── */}
-        <div className="lg:hidden space-y-10 sm:space-y-12">
+        <div className="md:hidden space-y-10 sm:space-y-12">
           {MILESTONES.map((m, idx) => (
             <div
               key={m.id}
