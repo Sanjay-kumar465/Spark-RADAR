@@ -27,11 +27,11 @@ import {
 } from '../../lib/gsap';
 import { Logo } from '../../components/branding/Logo';
 import { Button } from '../../components/common/Button';
+import { ComplianceJourney } from '../../components/landing/ComplianceJourney';
 
 export const LandingPage: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [activeJourneyStage, setActiveJourneyStage] = useState<number>(0);
 
   // GSAP Container & Element Refs
   const mainRef = useRef<HTMLDivElement>(null);
@@ -40,7 +40,6 @@ export const LandingPage: React.FC = () => {
   const heroVehicleRef = useRef<HTMLDivElement>(null);
   const heroCtaRef = useRef<HTMLDivElement>(null);
   const wordSectionRef = useRef<HTMLElement>(null);
-  const journeySectionRef = useRef<HTMLElement>(null);
   const featuresRef = useRef<HTMLElement>(null);
   const showcaseRef = useRef<HTMLElement>(null);
   const renewalsRef = useRef<HTMLElement>(null);
@@ -68,24 +67,6 @@ export const LandingPage: React.FC = () => {
         ease: 'power2.inOut',
       });
     }
-  };
-
-  // Switch journey stage with smooth transition
-  const handleStageChange = (stageIdx: number) => {
-    if (stageIdx === activeJourneyStage) return;
-    if (isReducedMotion()) {
-      setActiveJourneyStage(stageIdx);
-      return;
-    }
-    const panel = document.querySelector('.journey-stage-content');
-    if (panel) {
-      gsap.fromTo(
-        panel,
-        { opacity: 0, y: 15 },
-        { opacity: 1, y: 0, duration: 0.35, ease: 'power2.out' }
-      );
-    }
-    setActiveJourneyStage(stageIdx);
   };
 
   // Coordinated GSAP Timelines with lifecycle-safe useGSAP hook
@@ -211,150 +192,6 @@ export const LandingPage: React.FC = () => {
             },
           }
         );
-      }
-
-      // ─────────────────────────────────────────────────────────────
-      // 3. COMPLIANCE JOURNEY MASTER COORDINATED SCROLL TIMELINE
-      // ─────────────────────────────────────────────────────────────
-      if (!reduced && journeySectionRef.current) {
-        // Section Header Reveal
-        gsap.fromTo(
-          journeySectionRef.current.querySelector('.journey-header'),
-          { opacity: 0, y: 25 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.75,
-            ease: 'power3.out',
-            scrollTrigger: {
-              trigger: journeySectionRef.current,
-              start: 'top 82%',
-              toggleActions: 'play none none reverse',
-            },
-          }
-        );
-
-        // Coordinated Master Timeline with standard phase labels
-        const journeyTl = gsap.timeline({
-          scrollTrigger: {
-            trigger: journeySectionRef.current.querySelector('.journey-main-container'),
-            start: 'top 75%',
-            end: '+=1200',
-            scrub: 0.8,
-            onUpdate: (self) => {
-              // Smoothly synchronize active stage selector pill with scroll progress
-              if (self.progress < 0.45) {
-                setActiveJourneyStage(0);
-              } else if (self.progress < 0.75) {
-                setActiveJourneyStage(1);
-              } else if (self.progress < 0.90) {
-                setActiveJourneyStage(2);
-              } else {
-                setActiveJourneyStage(3);
-              }
-            },
-          },
-        });
-
-        journeyTl
-          .addLabel('onboard-enter')
-          // 1. Reveal outer black panel
-          .fromTo(
-            '.journey-main-container',
-            { opacity: 0.85, y: 35 },
-            { opacity: 1, y: 0, duration: 1, ease: 'power2.out' },
-            'onboard-enter'
-          )
-          // 2. Reveal lorry image with initial scale 0.92 -> 1.00
-          .fromTo(
-            '.journey-lorry-img',
-            { opacity: 0, scale: 0.92, y: 20 },
-            { opacity: 1, scale: 1.0, y: 0, duration: 1.2, ease: 'power2.out' },
-            'onboard-enter+=0.2'
-          )
-          // 3. Reveal registration details badge
-          .fromTo(
-            '.journey-lorry-badge',
-            { opacity: 0, y: 15 },
-            { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' },
-            'onboard-enter+=0.4'
-          )
-          .addLabel('onboard-details')
-          // 4. Reveal stage label
-          .fromTo(
-            '.journey-stage-badge',
-            { opacity: 0, x: -15 },
-            { opacity: 1, x: 0, duration: 0.6, ease: 'power2.out' },
-            'onboard-details'
-          )
-          // 5. Line-reveal headline
-          .fromTo(
-            '.journey-headline',
-            { opacity: 0, y: 15, clipPath: 'inset(0 0 100% 0)' },
-            { opacity: 1, y: 0, clipPath: 'inset(0 0 0% 0)', duration: 0.9, ease: 'power3.out' },
-            'onboard-details+=0.2'
-          )
-          // 6. Explanatory paragraph
-          .fromTo(
-            '.journey-paragraph',
-            { opacity: 0, y: 12 },
-            { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' },
-            'onboard-details+=0.35'
-          )
-          // 7. GVW & Permit specification cards stagger
-          .fromTo(
-            '.journey-spec-card',
-            { opacity: 0, y: 15, scale: 0.96 },
-            { opacity: 1, y: 0, scale: 1, stagger: 0.15, duration: 0.7, ease: 'power2.out' },
-            'onboard-details+=0.45'
-          )
-          .addLabel('normalization')
-          // 8. Registration normalization strip clip reveal from left to right
-          .fromTo(
-            '.journey-normalization-strip',
-            { opacity: 0, clipPath: 'inset(0 100% 0 0)', x: -20 },
-            { opacity: 1, clipPath: 'inset(0 0% 0 0)', x: 0, duration: 1.0, ease: 'power2.out' },
-            'normalization'
-          )
-          // Lorry cinematic depth: scale up to 1.08 with restrained upward parallax
-          .to(
-            '.journey-lorry-img',
-            { scale: 1.08, y: -25, duration: 1.5, ease: 'power1.out' },
-            'normalization+=0.2'
-          )
-          // Text column subtle parallax
-          .to(
-            '.journey-stage-content',
-            { y: -15, duration: 1.5, ease: 'power1.out' },
-            'normalization+=0.2'
-          )
-          .addLabel('onboard-exit')
-          // Transition: Lorry moves slightly toward left and reduces scale gently
-          .to(
-            '.journey-lorry-img',
-            { x: -16, scale: 1.0, duration: 1.0, ease: 'power2.inOut' },
-            'onboard-exit'
-          )
-          // Outgoing onboarding details fade out
-          .to(
-            '.journey-onboard-view',
-            { opacity: 0, y: -20, duration: 0.8, ease: 'power2.in' },
-            'onboard-exit'
-          )
-          .addLabel('verify-enter')
-          // Reveal Verify stage content with smooth overlap
-          .fromTo(
-            '.journey-verify-view',
-            { opacity: 0, y: 25 },
-            { opacity: 1, y: 0, duration: 1.0, ease: 'power2.out' },
-            'verify-enter-=0.3'
-          )
-          .fromTo(
-            '.journey-verify-item',
-            { opacity: 0, x: 20 },
-            { opacity: 1, x: 0, stagger: 0.12, duration: 0.8, ease: 'power2.out' },
-            'verify-enter'
-          );
       }
 
       // ─────────────────────────────────────────────────────────────
@@ -920,213 +757,9 @@ export const LandingPage: React.FC = () => {
       </section>
 
       {/* ─────────────────────────────────────────────────────────────
-          3. COMPLIANCE JOURNEY (Balanced Two-Column Layout, Zero Cropping)
+          3. COMPLIANCE JOURNEY (Cinematic Card-Based Storytelling Experience)
       ───────────────────────────────────────────────────────────── */}
-      <section
-        id="compliance-journey"
-        ref={journeySectionRef}
-        className="py-24 sm:py-28 bg-gradient-to-b from-black via-graphite to-black border-b border-graphite relative"
-      >
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-          {/* Section Heading & Stage Indicator Bar */}
-          <div className="journey-header text-center max-w-3xl mx-auto mb-12">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-black border border-golden/30 text-golden text-xs font-semibold mb-3">
-              <Compass className="w-3.5 h-3.5 text-golden" />
-              <span>Interactive Lifecycle Journey</span>
-            </div>
-            <h2 className="text-3xl sm:text-5xl font-extrabold text-white font-heading tracking-tight">
-              The Complete Vehicle Compliance Journey
-            </h2>
-            <p className="mt-3 text-base text-sand">
-              Experience the four operational milestones: from initial onboarding and verification to proactive monitoring and audit-proof archive.
-            </p>
-
-            {/* Stage Selector Pills (Interactive and Clickable) */}
-            <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 mt-6">
-              {[
-                { idx: 0, title: '01 Onboard' },
-                { idx: 1, title: '02 Verify' },
-                { idx: 2, title: '03 Monitor' },
-                { idx: 3, title: '04 Archive' },
-              ].map((s) => (
-                <button
-                  key={s.idx}
-                  onClick={() => handleStageChange(s.idx)}
-                  className={`px-4 py-2 rounded-xl text-xs font-bold font-mono transition-all ${
-                    activeJourneyStage === s.idx
-                      ? 'bg-golden text-black shadow-elevated scale-105'
-                      : 'bg-graphite text-sand hover:text-white border border-graphite'
-                  }`}
-                >
-                  {s.title}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Balanced Two-Column Main Container (Sized to fit naturally with zero clipping) */}
-          <div className="journey-main-container bg-black/85 border border-graphite rounded-3xl p-6 sm:p-10 shadow-dropdown">
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
-              
-              {/* Left Column (md:col-span-6 min-w-0): Real Vehicle Showcase */}
-              <div className="md:col-span-6 min-w-0 space-y-4">
-                <div className="p-6 rounded-2xl bg-graphite/40 border border-graphite flex flex-col items-center justify-center relative overflow-hidden">
-                  {/* Real Cutout Image */}
-                  <img
-                    src="/images/hero-lorry-cutout.png"
-                    alt="Ashok Leyland 1215 HCV Real Lorry Cutout"
-                    className="journey-lorry-img w-full h-auto max-h-72 sm:max-h-84 object-contain filter drop-shadow-[0_20px_35px_rgba(0,0,0,0.9)] scale-105"
-                    width="1536"
-                    height="1024"
-                  />
-                  
-                  {/* Vehicle Identity Badge */}
-                  <div className="journey-lorry-badge mt-4 w-full bg-black/80 border border-golden/40 px-3.5 py-2 rounded-xl flex items-center justify-between text-xs">
-                    <div>
-                      <span className="font-mono text-golden font-bold block text-sm">TN 01 EX 9988</span>
-                      <span className="text-sand text-[11px]">Ashok Leyland 1215 • Goods Carrier (HCV)</span>
-                    </div>
-                    <span className="px-2 py-0.5 rounded bg-golden text-black font-mono font-bold text-[10px]">
-                      REGISTERED
-                    </span>
-                  </div>
-                </div>
-
-                {/* Normalization & Specs Bar */}
-                <div className="journey-normalization-strip p-3.5 rounded-xl bg-graphite border border-black/40 text-xs font-mono text-sand flex flex-wrap items-center justify-between gap-2">
-                  <span>Input: <span className="text-racing">"tn01ex9988"</span></span>
-                  <ArrowRight className="w-4 h-4 text-golden" />
-                  <span>Stored: <span className="text-golden font-bold">"TN 01 EX 9988"</span></span>
-                </div>
-              </div>
-
-              {/* Right Column (md:col-span-6 min-w-0): Dynamic Stage Content */}
-              <div className="journey-stage-content md:col-span-6 min-w-0 space-y-4 text-left">
-                
-                {/* ── STAGE 01: ONBOARD ── */}
-                {activeJourneyStage === 0 && (
-                  <div className="journey-onboard-view space-y-4">
-                    <span className="journey-stage-badge text-xs font-bold text-golden uppercase tracking-wider font-mono block">
-                      Stage 01 • Onboarding & Identity
-                    </span>
-                    <h3 className="journey-headline text-2xl font-bold text-white font-heading">
-                      Strict plate normalization eliminates duplicate confusion.
-                    </h3>
-                    <p className="journey-paragraph text-sm text-sand leading-relaxed">
-                      Fleet managers type registration numbers in varied formats. Spark Radar normalizes casing and whitespace automatically before writing to PostgreSQL, preventing accidental duplicate vehicle profiles across transport yards.
-                    </p>
-                    <div className="grid grid-cols-2 gap-3 pt-2 text-xs">
-                      <div className="journey-spec-card p-3 rounded-xl bg-graphite border border-black/40">
-                        <span className="text-sand/60 block text-[10px] uppercase font-mono">GVW Rating</span>
-                        <span className="font-bold text-white text-sm">11,990 kg</span>
-                      </div>
-                      <div className="journey-spec-card p-3 rounded-xl bg-graphite border border-black/40">
-                        <span className="text-sand/60 block text-[10px] uppercase font-mono">Permit Type</span>
-                        <span className="font-bold text-golden text-sm">National Goods Permit</span>
-                      </div>
-                    </div>
-                  </div>
-                )}
-
-                {/* ── STAGE 02: VERIFY ── */}
-                {activeJourneyStage === 1 && (
-                  <div className="journey-verify-view space-y-3">
-                    <div className="flex items-center justify-between pb-2 border-b border-black/40">
-                      <span className="text-xs font-bold text-sand uppercase font-mono">Stage 02 • Verification Matrix</span>
-                      <span className="text-xs font-bold text-golden bg-golden/10 px-2 py-0.5 rounded">4/4 Attached</span>
-                    </div>
-                    {[
-                      { name: 'Fitness Form 38', exp: 'Valid till 15 Nov 2026', status: 'Compliant' },
-                      { name: 'Commercial Goods Policy', exp: 'Expires in 2 Days', status: 'Urgent' },
-                      { name: 'Quarterly Road Tax', exp: 'Valid till 31 Dec 2026', status: 'Compliant' },
-                      { name: 'PUC Green Slip', exp: 'Valid till 28 Feb 2027', status: 'Compliant' },
-                    ].map((doc, idx) => (
-                      <div key={idx} className="journey-verify-item p-3 rounded-xl bg-graphite border border-black/40 flex items-center justify-between text-xs">
-                        <div className="flex items-center gap-2.5">
-                          <FileCheck className="w-4 h-4 text-golden shrink-0" />
-                          <div>
-                            <span className="font-bold text-white block">{doc.name}</span>
-                            <span className="text-[10px] text-sand/70 font-mono">%PDF-1.4 Verified</span>
-                          </div>
-                        </div>
-                        <span className={`text-[11px] font-mono font-bold ${doc.status === 'Urgent' ? 'text-racing' : 'text-golden'}`}>
-                          {doc.exp}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                )}
-
-                {/* ── STAGE 03: MONITOR ── */}
-                {activeJourneyStage === 2 && (
-                  <div className="space-y-4">
-                    <span className="text-xs font-bold text-racing uppercase tracking-wider font-mono">
-                      Stage 03 • Expiry Radar & Alerts
-                    </span>
-                    <h3 className="text-2xl font-bold text-white font-heading">
-                      Deterministic urgency calculations. Zero false validity.
-                    </h3>
-                    <p className="text-sm text-sand leading-relaxed">
-                      Our calculation engine triggers countdown alerts at 30, 15, 7, and 1-day boundaries. Missing expiry dates are never assumed valid.
-                    </p>
-                    <div className="space-y-2.5 pt-1">
-                      <div className="p-3.5 rounded-xl bg-graphite border border-racing/50 flex items-center justify-between text-xs">
-                        <div className="flex items-center gap-2">
-                          <AlertTriangle className="w-4 h-4 text-racing shrink-0" />
-                          <div>
-                            <span className="font-bold text-white block">Commercial Insurance Expiring</span>
-                            <span className="text-[10px] text-sand">TN 01 EX 9988 • Policy #88219</span>
-                          </div>
-                        </div>
-                        <span className="font-mono text-racing font-bold">1 Day (Due Today)</span>
-                      </div>
-                      <div className="p-3.5 rounded-xl bg-graphite border border-golden/40 flex items-center justify-between text-xs">
-                        <div className="flex items-center gap-2">
-                          <Clock className="w-4 h-4 text-golden shrink-0" />
-                          <div>
-                            <span className="font-bold text-white block">Fitness Form 38 Inspection</span>
-                            <span className="text-[10px] text-sand">RTO Slot Booked</span>
-                          </div>
-                        </div>
-                        <span className="font-mono text-golden font-bold">7 Days Remaining</span>
-                      </div>
-                    </div>
-                  </div>
-                )}
-
-                {/* ── STAGE 04: ARCHIVE ── */}
-                {activeJourneyStage === 3 && (
-                  <div className="space-y-4">
-                    <span className="text-xs font-bold text-golden uppercase tracking-wider font-mono">
-                      Stage 04 • Immutable History
-                    </span>
-                    <h3 className="text-2xl font-bold text-white font-heading">
-                      Renewal completed. Antecedent certificates preserved.
-                    </h3>
-                    <p className="text-sm text-sand leading-relaxed">
-                      Completing a renewal stamps actor identity and notes. Superseded certificates remain permanently searchable for transport tax and police audits.
-                    </p>
-                    <div className="p-4 rounded-xl bg-graphite border border-golden/40 space-y-2 text-xs">
-                      <div className="flex items-center justify-between">
-                        <span className="font-bold text-white text-sm">Policy #88219 Renewal Confirmed</span>
-                        <CheckCircle2 className="w-4 h-4 text-golden" />
-                      </div>
-                      <p className="text-sand text-[11px] leading-relaxed">
-                        Valid through 28 Oct 2027. Previous policy archived under hash <span className="text-golden font-mono">#arc-2025-tn01</span>.
-                      </p>
-                      <div className="pt-2 border-t border-black/30 flex items-center justify-between text-[11px] text-sand">
-                        <span>Actor: <span className="text-golden font-bold">Selvam M. (Manager)</span></span>
-                        <span className="font-mono">2026-10-29 14:30 IST</span>
-                      </div>
-                    </div>
-                  </div>
-                )}
-
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <ComplianceJourney />
 
       {/* ─────────────────────────────────────────────────────────────
           4. FEATURES SUITE (Distinct Art-Directed Compositions)
