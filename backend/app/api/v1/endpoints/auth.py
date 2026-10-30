@@ -23,6 +23,7 @@ from app.schemas.auth import (
 )
 from app.schemas.workspace import WorkspaceResponse
 from app.api.deps import get_current_user
+from app.services.google_auth import verify_google_credential
 
 router = APIRouter()
 
@@ -122,60 +123,13 @@ def login(req: LoginRequest, request: Request, db: Session = Depends(get_db)):
 @router.post("/google", response_model=Token)
 def google_login(req: GoogleLoginRequest, request: Request, db: Session = Depends(get_db)):
     auth_rate_limiter.check(request)
-    if not req.credential:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Google credential token is required."
-        )
 
-    # Validate ID token using Google tokeninfo API
-    try:
-        with httpx.Client(timeout=10.0) as client:
-            resp = client.get("https://oauth2.googleapis.com/tokeninfo", params={"id_token": req.credential})
-            if resp.status_code != 200:
-                raise HTTPException(
-                    status_code=status.HTTP_401_UNAUTHORIZED,
-                    detail="Invalid or expired Google credential."
-                )
-            token_info = resp.json()
-    except httpx.RequestError as exc:
-        raise HTTPException(
-            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
-            detail=f"Unable to reach Google OAuth verification servers: {str(exc)}"
-        )
+    # Securely verify Google credentials with trusted library validating signature, issuer, audience, and expiry
+    verified_data = verify_google_credential(req.credential)
+    sub = verified_data["sub"]
+    email_clean = verified_data["email"]
+    name = verified_data["name"]
 
-    sub = token_info.get("sub")
-    email = token_info.get("email")
-    email_verified = token_info.get("email_verified")
-    iss = token_info.get("iss")
-
-    if not sub or not email:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Incomplete identity claims in Google token."
-        )
-
-    if iss not in ["accounts.google.com", "https://accounts.google.com"]:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Invalid Google token issuer."
-        )
-
-    if str(email_verified).lower() not in ["true", "1"]:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Google email address has not been verified."
-        )
-
-    # Check client ID if configured with a real ID
-    if settings.GOOGLE_CLIENT_ID and not settings.GOOGLE_CLIENT_ID.startswith("your-google"):
-        if token_info.get("aud") != settings.GOOGLE_CLIENT_ID:
-            raise HTTPException(
-                status_code=status.HTTP_401_UNAUTHORIZED,
-                detail="Google token audience does not match configured client ID."
-            )
-
-    email_clean = email.lower().strip()
     user = db.query(User).filter(User.google_id == sub).first()
 
     if not user:
@@ -188,7 +142,6 @@ def google_login(req: GoogleLoginRequest, request: Request, db: Session = Depend
             db.refresh(user)
         else:
             user_id = str(uuid.uuid4())
-            name = token_info.get("name") or token_info.get("given_name") or email_clean.split("@")[0]
             user = User(
                 id=user_id,
                 email=email_clean,
