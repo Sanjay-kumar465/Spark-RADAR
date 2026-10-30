@@ -29,6 +29,15 @@ app.add_middleware(
 
 app.include_router(api_router, prefix=settings.API_V1_STR)
 
+@app.on_event("startup")
+def startup_event():
+    # Automatically seed realistic Indian demo fleet data if not already present
+    try:
+        from scripts.seed_demo import seed
+        seed()
+    except Exception as e:
+        print(f"[Spark Radar] Startup demo seeding notice: {e}")
+
 @app.get("/")
 def root():
     return {
