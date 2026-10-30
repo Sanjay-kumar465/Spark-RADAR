@@ -486,7 +486,7 @@ export const ComplianceJourney: React.FC = () => {
           },
         });
 
-        desktopScrollTriggerRef.current = masterTimeline.scrollTrigger;
+        desktopScrollTriggerRef.current = masterTimeline.scrollTrigger ?? null;
 
         // --- PHASE 0: HOLD CARD 0 (Subtle Vehicle Depth) ---
         masterTimeline.to(

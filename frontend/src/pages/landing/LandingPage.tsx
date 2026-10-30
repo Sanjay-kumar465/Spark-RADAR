@@ -14,7 +14,6 @@ import {
   FileCheck,
   AlertTriangle,
   FileText,
-  Compass,
   Sparkles,
   Award,
   Calendar,
