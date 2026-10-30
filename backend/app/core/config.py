@@ -27,7 +27,7 @@ class Settings(BaseSettings):
     FRONTEND_URL: str = os.getenv("FRONTEND_URL", "https://spark-radar-saas.vercel.app")
 
     # Production CORS settings: allow deployed Vercel frontend without permitting arbitrary origins
-    BACKEND_CORS_ORIGINS: List[str] = [
+    BACKEND_CORS_ORIGINS: Union[str, List[str]] = [
         "https://spark-radar-saas.vercel.app",
         "http://localhost:5173",
         "http://localhost:3000",
@@ -35,7 +35,7 @@ class Settings(BaseSettings):
         "http://127.0.0.1:3000"
     ]
 
-    @field_validator("BACKEND_CORS_ORIGINS", mode="before")
+    @field_validator("BACKEND_CORS_ORIGINS", mode="after")
     @classmethod
     def assemble_cors_origins(cls, v: Union[str, List[str]]) -> List[str]:
         default_origins = [
@@ -56,7 +56,9 @@ class Settings(BaseSettings):
         origins: List[str] = []
         if isinstance(v, str):
             v_clean = v.strip()
-            if v_clean.startswith("[") and v_clean.endswith("]"):
+            if not v_clean:
+                origins = list(default_origins)
+            elif v_clean.startswith("[") and v_clean.endswith("]"):
                 try:
                     parsed = json.loads(v_clean)
                     origins = [str(i).strip().rstrip("/") for i in parsed if str(i).strip()]
@@ -67,7 +69,7 @@ class Settings(BaseSettings):
         elif isinstance(v, list):
             origins = [str(i).strip().rstrip("/") for i in v if str(i).strip()]
         else:
-            origins = default_origins
+            origins = list(default_origins)
 
         # Always include default and configured production URLs
         for origin in default_origins:
